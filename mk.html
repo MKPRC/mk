@@ -16,68 +16,56 @@
       align-items: center;
       justify-content: flex-start;
       min-height: 100vh;
+      padding-top: 60px;
     }
-
     h1 {
       color: gold;
-      font-size: 54px;
-      margin-top: 60px;
-      margin-bottom: 10px;
+      font-size: 52px;
+      margin-bottom: 4px;
       font-weight: bold;
     }
-
     .subtitle {
       color: gold;
       font-size: 14px;
-      letter-spacing: 1.8px;
-      margin-bottom: 40px;
+      letter-spacing: 1.5px;
+      margin-bottom: 30px;
     }
-
     .section {
-      background-color: #1a1a1a;
-      padding: 30px;
-      border-radius: 16px;
-      width: 90%;
-      max-width: 380px;
       text-align: center;
-      box-shadow: 0 0 12px rgba(255, 215, 0, 0.15);
+      margin-bottom: 30px;
     }
-
     .section h2 {
       font-size: 20px;
-      color: #fff;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
     }
-
     .section p {
-      font-size: 14px;
+      font-size: 13px;
       color: #aaa;
-      margin-bottom: 20px;
+      margin-top: 0;
     }
-
-    .section button {
+    .menu button {
       background-color: transparent;
-      color: gold;
-      border: 2px solid gold;
-      padding: 12px;
-      border-radius: 10px;
+      border: 1.5px solid gold;
+      padding: 14px 20px;
       font-size: 15px;
-      font-weight: 600;
-      width: 100%;
       cursor: pointer;
-      transition: all 0.3s ease;
+      border-radius: 8px;
+      color: gold;
+      font-weight: 600;
+      margin-bottom: 18px;
+      width: 260px;
+      transition: all 0.3s;
     }
-
-    .section button:hover {
+    .menu button:hover {
       background-color: gold;
       color: #000;
     }
-
     .footer {
       font-size: 13px;
-      color: #aaa;
+      color: #888;
       text-align: center;
-      margin: 40px 20px;
+      margin-top: 40px;
+      padding: 0 30px;
     }
   </style>
 </head>
@@ -88,19 +76,26 @@
   <div class="section">
     <h2>나의 흐름 보기</h2>
     <p>MK가 어떤 사람인지 궁금하셨다면</p>
-    <button>나의 흐름 보기</button>
+    <div class="menu">
+      <button>나의 흐름 보기</button>
+    </div>
   </div>
 
   <div class="section">
     <h2>내 흐름도 정리해보고 싶다면?</h2>
     <p>요즘 나의 내면은 어떤 흐름 속에 있는지 가볍게 확인해보세요</p>
-    <button>내 흐름도 정리해보고 싶다면?</button>
+    <div class="menu">
+      <button>내 흐름도 정리해보고 싶다면?</button>
+    </div>
   </div>
 
-  <div class="section">
+  <div class="menu">
     <button>MK Protocol 보기</button>
   </div>
 
-  <div class="footer">“크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”</div>
+  <div class="footer">
+    “크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”
+  </div>
 </body>
 </html>
+
