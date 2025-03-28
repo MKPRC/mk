@@ -16,27 +16,33 @@
       align-items: center;
       padding-top: 40px;
     }
-
     h1 {
       color: gold;
       font-size: 54px;
       margin: 0;
     }
-
     .subtitle {
       color: gold;
       font-size: 14px;
       letter-spacing: 1px;
       margin: 10px 0 40px;
     }
-
     .section {
       width: 90%;
       max-width: 360px;
       text-align: center;
       margin-bottom: 32px;
     }
-
+    .section h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+    .section p {
+      font-size: 14px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
     .menu-button {
       width: 100%;
       padding: 12px 0;
@@ -48,44 +54,16 @@
       cursor: pointer;
       font-weight: bold;
       transition: all 0.3s;
-      margin-top: 10px;
     }
-
     .menu-button:hover {
       background-color: gold;
       color: #000;
     }
-
-    .question {
-      margin-bottom: 20px;
-      font-size: 18px;
-    }
-
-    .option {
-      margin: 6px 0;
-      cursor: pointer;
-      padding: 10px;
-      border: 1px solid #aaa;
-      border-radius: 8px;
-      transition: all 0.3s;
-    }
-
-    .option:hover {
-      background-color: gold;
-      color: #000;
-    }
-
     .footer {
       font-size: 12px;
       color: #aaa;
       text-align: center;
       padding: 40px 20px;
-    }
-
-    #survey, #result {
-      display: none;
-      flex-direction: column;
-      align-items: center;
     }
   </style>
 </head>
@@ -94,86 +72,21 @@
   <div class="subtitle">Gold · Auto · Trade · Value Networking</div>
 
   <div class="section">
-    <button class="menu-button" onclick="startSurvey()">내 흐름도 정리해보고 싶다면?</button>
+    <h2>나의 흐름 보기</h2>
+    <p>MK가 어떤 사람인지 궁금하셨다면</p>
+    <button class="menu-button" onclick="alert('준비 중입니다')">나의 흐름 보기</button>
   </div>
 
-  <div id="survey" class="section">
-    <div class="question" id="question"></div>
-    <div id="options"></div>
+  <div class="section">
+    <h2>내 흐름도 정리해보고 싶다면?</h2>
+    <p>요즘 나의 내면은 어떤 흐름 속에 있는지 가볍게 확인해보세요</p>
+    <button class="menu-button" onclick="location.href='flowtest.html'">내 흐름도 정리해보고 싶다면?</button>
   </div>
 
-  <div id="result" class="section">
-    <h2>🌿 당신의 심리적 장점</h2>
-    <p id="resultText"></p>
-    <button class="menu-button" onclick="goHome()">홈으로 돌아가기</button>
+  <div class="section">
+    <button class="menu-button" onclick="alert('준비 중입니다')">MK Protocol 보기</button>
   </div>
 
   <div class="footer">“크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”</div>
-
-  <script>
-    const questions = [
-      {
-        q: "오늘 하루, 어떤 색깔에 가장 끌렸나요?",
-        options: ["파란색 (차분함)", "빨간색 (열정)", "초록색 (균형)", "검은색 (신중함)", "노란색 (에너지)"]
-      },
-      {
-        q: "다음 중 가장 마음에 드는 단어는?",
-        options: ["성장", "자유", "안정", "도전", "조화"]
-      },
-      {
-        q: "친구와의 대화 중 내가 주로 하는 역할은?",
-        options: ["경청하는 편", "조언하는 편", "분위기 띄우기", "갈등 조율", "상대에 따라 달라짐"]
-      },
-      {
-        q: "요즘 자주 떠오르는 감정은?",
-        options: ["설렘", "불안", "평온", "짜증", "호기심"]
-      },
-      {
-        q: "스스로를 한 마디로 표현한다면?",
-        options: ["관찰자", "실행가", "조율자", "모험가", "사색가"]
-      }
-    ];
-
-    let current = 0;
-
-    function startSurvey() {
-      document.querySelector(".section").style.display = "none";
-      document.getElementById("survey").style.display = "flex";
-      showQuestion();
-    }
-
-    function showQuestion() {
-      document.getElementById("question").innerText = questions[current].q;
-      const optionsDiv = document.getElementById("options");
-      optionsDiv.innerHTML = "";
-      questions[current].options.forEach(option => {
-        const div = document.createElement("div");
-        div.className = "option";
-        div.innerText = option;
-        div.onclick = () => nextQuestion();
-        optionsDiv.appendChild(div);
-      });
-    }
-
-    function nextQuestion() {
-      current++;
-      if (current < questions.length) {
-        showQuestion();
-      } else {
-        showResult();
-      }
-    }
-
-    function showResult() {
-      document.getElementById("survey").style.display = "none";
-      document.getElementById("result").style.display = "flex";
-      document.getElementById("resultText").innerText =
-        "🌟 당신은 관찰력과 내면의 성찰을 바탕으로, 주변을 따뜻하게 만드는 사람입니다.";
-    }
-
-    function goHome() {
-      location.reload();
-    }
-  </script>
 </body>
 </html>
