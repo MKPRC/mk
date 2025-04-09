@@ -2,31 +2,100 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>MK Flow Test</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MK 흐름 체크하기</title>
   <style>
     body {
+      margin: 0;
       background-color: #111;
       color: #f5f5f5;
       font-family: 'Noto Sans KR', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
+      padding: 20px;
       text-align: center;
     }
-    a {
-      margin-top: 20px;
+    .container {
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
       color: #f5c518;
-      text-decoration: none;
-      border: 1px solid #f5c518;
+    }
+    .question {
+      margin: 30px 0;
+    }
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+    button {
+      background-color: transparent;
+      color: #f5c518;
+      border: 2px solid #f5c518;
       padding: 10px 20px;
       border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 20px 10px;
     }
   </style>
 </head>
 <body>
-  <h1>준비 중입니다...</h1>
-  <a href="index.html">홈으로 돌아가기</a>
+  <div class="container">
+    <h1>MK 흐름 체크하기</h1>
+    <form id="flowForm">
+      <div class="question">
+        <p>1. 요즘 나는 사람들과의 연결 속에서…</p>
+        <label><input type="radio" name="q1" value="A"> 자연스럽게 에너지를 주고받는다</label>
+        <label><input type="radio" name="q1" value="B"> 거리를 조절하며 나를 지킨다</label>
+        <label><input type="radio" name="q1" value="C"> 혼자 있는 시간이 더 편하다</label>
+      </div>
+      <div class="question">
+        <p>2. 나의 하루는 어떤 리듬으로 흘러가고 있나?</p>
+        <label><input type="radio" name="q2" value="A"> 내가 만든 루틴을 따라 흐른다</label>
+        <label><input type="radio" name="q2" value="B"> 필요에 따라 유동적으로 움직인다</label>
+        <label><input type="radio" name="q2" value="C"> 무의식적으로 흘러가는 느낌이다</label>
+      </div>
+      <div class="question">
+        <p>3. 결정 앞에서 나는…</p>
+        <label><input type="radio" name="q3" value="A"> 나만의 기준이 있고 신중하게 선택한다</label>
+        <label><input type="radio" name="q3" value="B"> 상황과 감정에 따라 융통성 있게 판단한다</label>
+        <label><input type="radio" name="q3" value="C"> 선택 이후에 자주 마음이 바뀌곤 한다</label>
+      </div>
+      <div class="question">
+        <p>4. 감정과 마주할 때 나는…</p>
+        <label><input type="radio" name="q4" value="A"> 감정을 하나의 신호로 바라보려 한다</label>
+        <label><input type="radio" name="q4" value="B"> 감정에 솔직하려 노력한다</label>
+        <label><input type="radio" name="q4" value="C"> 감정에 끌려가듯 휩쓸릴 때가 있다</label>
+      </div>
+      <div class="question">
+        <p>5. 지금의 나는…</p>
+        <label><input type="radio" name="q5" value="A"> 내가 향하는 방향을 대체로 알고 있다</label>
+        <label><input type="radio" name="q5" value="B"> 흐름 속에서 방향을 찾아가고 있다</label>
+        <label><input type="radio" name="q5" value="C"> 잠시 멈춰 내 흐름을 다시 느껴보고 싶다</label>
+      </div>
+      <button type="submit">흐름 체크 완료</button>
+    </form>
+  </div>
+  <script>
+    const form = document.getElementById('flowForm');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const answers = [
+        form.q1.value, form.q2.value, form.q3.value, form.q4.value, form.q5.value
+      ];
+      const counts = { A: 0, B: 0, C: 0 };
+      answers.forEach(a => counts[a]++);
+      let flowType = '';
+      if (counts.C >= 4) flowType = '이탈 흐름';
+      else if (counts.C === 3) flowType = '흔들림 흐름';
+      else if (counts.B >= 3) flowType = '회복 흐름';
+      else if (counts.A >= 4) flowType = 'MK 중심 흐름';
+      else if (answers[0] === 'A' && answers[4] === 'B') flowType = '연결 흐름';
+      else if (answers[0] === 'C' && answers[1] === 'A') flowType = '독립 흐름';
+      else flowType = '감정 초월 흐름';
+      window.location.href = `mk_flow_result.html?type=${encodeURIComponent(flowType)}`;
+    });
+  </script>
 </body>
 </html>
