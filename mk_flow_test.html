@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MK 흐름 체크하기</title>
   <style>
@@ -49,12 +49,18 @@
       background: #f5c518;
       color: #000;
     }
+    .progress {
+      margin-top: 30px;
+      font-size: 0.9rem;
+      color: #888;
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>MK 흐름 체크하기</h1>
     <div id="quiz"></div>
+    <div id="progress" class="progress"></div>
   </div>
 
   <script>
@@ -87,12 +93,14 @@
     function renderQuestion() {
       const q = questions[currentQuestion];
       const quizDiv = document.getElementById("quiz");
+      const progressDiv = document.getElementById("progress");
       quizDiv.innerHTML = `
         <div class="question"><strong>${q.question}</strong></div>
         <div class="answers">
           ${q.options.map((opt, idx) => `<button onclick="handleAnswer('${String.fromCharCode(65 + idx)}')">${opt}</button>`).join("")}
         </div>
       `;
+      progressDiv.innerText = `질문 ${currentQuestion + 1} / ${questions.length}`;
     }
 
     function handleAnswer(answer) {
