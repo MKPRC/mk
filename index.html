@@ -2,45 +2,73 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>MK Protocol 흐름 테스트</title>
+    <meta charset="UTF-8" />
+    <title>MK Protocol</title>
     <style>
         body {
-            background-color: #0a0a0a;
+            background-color: #111;
             color: gold;
             font-family: 'Pretendard', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 100px auto;
+            padding: 40px;
+            background-color: #1a1a1a;
+            border-radius: 20px;
             text-align: center;
-            padding: 80px 20px;
         }
         h1 {
             font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .subtitle {
+            font-size: 1rem;
             font-weight: bold;
-            margin-bottom: 3rem;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+        .description {
+            font-size: 0.95rem;
+            color: #ccc;
+            margin-bottom: 2rem;
         }
         .button {
-            display: inline-block;
-            margin: 0 10px;
-            padding: 15px 30px;
-            background-color: #ffd700;
-            color: black;
-            font-weight: bold;
+            display: block;
+            width: 80%;
+            margin: 10px auto;
+            padding: 15px;
             font-size: 1rem;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
+            font-weight: bold;
+            background-color: transparent;
+            color: gold;
+            border: 2px solid gold;
+            border-radius: 8px;
             text-decoration: none;
             transition: background-color 0.3s ease;
         }
         .button:hover {
-            background-color: #ffcc00;
+            background-color: gold;
+            color: black;
+        }
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #888;
         }
     </style>
 </head>
 <body>
-    <h1>MK Protocol 흐름 테스트</h1>
-
-    <a href="mk_flow_test.html" class="button">내 흐름 체크하기</a>
-    <a href="mk_flow_result_with_full_types.html" class="button">나의 흐름 보기</a>
-    <a href="mk_protocol.html" class="button">MK Protocol 보기</a>
+    <div class="container">
+        <h1>MK</h1>
+        <div class="subtitle">Gold · Auto · Trade · Insurance · Value Networking</div>
+        <div class="description">흐름을 점검하고, 당신의 가치와 연결되는 네트워크를 발견해보세요.</div>
+        <a href="mk_flow_test.html" class="button">나의 흐름 체크해보기</a>
+        <a href="mk_flow_result.html" class="button">MK 흐름보기</a>
+        <a href="mk_protocol.html" class="button">MK Protocol 보기</a>
+        <div class="footer">“크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”</div>
+    </div>
 </body>
 </html>
