@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -8,42 +9,68 @@
     body {
       margin: 0;
       background-color: #111;
-      color: #f5c518;
+      color: #f5f5f5;
       font-family: 'Noto Sans KR', sans-serif;
-      text-align: center;
-      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
     }
     .container {
       max-width: 600px;
-      margin: auto;
+      width: 100%;
+      background: #000;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
     }
     h1 {
+      color: #f5c518;
       margin-bottom: 10px;
     }
-    .desc {
-      margin-bottom: 30px;
-      color: #f5f5f5;
-    }
-    a.button {
-      display: block;
-      background: transparent;
-      border: 2px solid #f5c518;
+    p.subtitle {
+      margin-top: 10px;
       color: #f5c518;
-      padding: 12px;
-      border-radius: 6px;
-      margin: 10px 0;
       font-weight: bold;
+    }
+    p.hook {
+      margin-top: 15px;
+      color: #fff;
+      font-style: italic;
+      font-size: 0.95em;
+    }
+    a {
+      background: transparent;
+      color: #f5c518;
+      border: 2px solid #f5c518;
       text-decoration: none;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      display: block;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 30px;
+      color: #777;
+      font-size: 0.9em;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>MK</h1>
-    <p class="desc">Gold · Auto · Trade · Insurance · Value Networking</p>
-    <a class="button" href="mk_flow_test.html">나의 흐름 체크해보기</a>
-    <a class="button" href="mk_philosophy.html">MK 흐름보기</a>
-    <a class="button" href="mk_protocol.html">MK Protocol 보기</a>
+    <p class="subtitle">Gold · Auto · Trade · Insurance · Value Networking</p>
+    <p class="hook">흐름을 점검하고, 당신의 가치와 연결되는 네트워크를 발견해보세요.</p>
+
+    <a href="mk_flow_test.html">나의 흐름 체크해보기</a>
+    <a href="mk_philosophy.html">MK 흐름보기</a>
+    <a href="mk_protocol.html">MK Protocol 보기</a>
+
+    <footer>
+      “크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”
+    </footer>
   </div>
 </body>
 </html>
