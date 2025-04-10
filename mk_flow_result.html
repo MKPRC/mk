@@ -137,9 +137,9 @@ MK는 어떤 흐름이든 부정하지 않고, 그 끝에서 다시 시작되는
           <div class="traits">• ${result.traits}</div>
           <div class="comment">${result.comment}</div>
           <div class="actions">
-            <a href="mk_flow_test.html">다시 해보기</a>
-            <a href="#">결과 공유하기</a>
-            <a href="#">MK 네트워크 보기</a>
+            <a href="index.html">홈으로</a>
+            <a href="#" onclick="copyResultUrl()">결과 공유하기</a>
+            <a href="#" style="opacity: 0.5; pointer-events: none;">MK 네트워크 보기</a>
           </div>
         `;
       } else {
@@ -149,7 +149,17 @@ MK는 어떤 흐름이든 부정하지 않고, 그 끝에서 다시 시작되는
       document.getElementById("resultArea").innerText = "오류가 발생했습니다. 다시 시도해주세요.";
       console.error("결과 표시 중 오류:", err);
     }
-  </script>
+  
+    function copyResultUrl() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        alert("결과 링크가 복사되었습니다!");
+      }).catch(() => {
+        alert("복사에 실패했습니다. 직접 복사해주세요.");
+      });
+    }
+    </script>
+    
 
 </body>
 </html>
