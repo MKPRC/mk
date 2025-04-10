@@ -2,111 +2,215 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MK 흐름 체크하기</title>
+  <title>나의 흐름 체크하기</title>
   <style>
     body {
       background-color: #111;
       color: #f5f5f5;
       font-family: 'Noto Sans KR', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
-    .container {
+      padding: 40px 20px;
       max-width: 600px;
-      width: 100%;
-      background: #000;
-      border-radius: 12px;
-      padding: 20px;
-      text-align: center;
+      margin: auto;
     }
     h1 {
       color: #f5c518;
-      margin-bottom: 20px;
+      text-align: center;
+      margin-bottom: 30px;
     }
     .question {
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
-    .answers {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin: 15px 0;
+    .question h3 {
+      margin-bottom: 10px;
     }
-    button {
-      background: transparent;
-      color: #f5c518;
-      border: 2px solid #f5c518;
-      padding: 10px;
-      border-radius: 6px;
-      font-weight: bold;
+    .options label {
+      display: block;
+      margin: 6px 0;
       cursor: pointer;
     }
-    button:hover {
-      background: #f5c518;
+    button {
+      margin-top: 30px;
+      background-color: #f5c518;
       color: #000;
+      font-weight: bold;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .result-box {
+      margin-top: 40px;
+      padding: 20px;
+      border-top: 1px solid #444;
+    }
+    .result-box h2 {
+      color: #f5c518;
+    }
+    .result-box .traits {
+      color: #ffda77;
+      font-weight: bold;
+      margin: 8px 0;
+    }
+    .result-box .comment {
+      white-space: pre-line;
+      margin-top: 12px;
+    }
+    .actions a {
+      display: inline-block;
+      margin: 10px 10px 0 0;
+      padding: 10px 16px;
+      color: gold;
+      border: 1px solid gold;
+      text-decoration: none;
+      border-radius: 5px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>MK 흐름 체크하기</h1>
-    <div id="quiz"></div>
-  </div>
+
+  <h1>나의 흐름 체크하기</h1>
+
+  <form id="flowTestForm">
+    <div class="question">
+      <h3>1. 아침에 눈을 떴을 때 가장 먼저 드는 생각은?</h3>
+      <div class="options">
+        <label><input type="radio" name="q1" value="A" required> 오늘은 어떤 흐름일까?</label>
+        <label><input type="radio" name="q1" value="B"> 해야 할 일들이 머릿속을 채운다</label>
+        <label><input type="radio" name="q1" value="C"> 다시 눈을 감고 싶다</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>2. 요즘 사람들과의 관계는?</h3>
+      <div class="options">
+        <label><input type="radio" name="q2" value="A" required> 안정적이고 편안하다</label>
+        <label><input type="radio" name="q2" value="B"> 오르락내리락한다</label>
+        <label><input type="radio" name="q2" value="C"> 멀게 느껴진다</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>3. 나의 루틴은?</h3>
+      <div class="options">
+        <label><input type="radio" name="q3" value="A" required> 잘 유지되고 있다</label>
+        <label><input type="radio" name="q3" value="B"> 가끔 흐트러진다</label>
+        <label><input type="radio" name="q3" value="C"> 루틴이 없다</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>4. 감정 상태는?</h3>
+      <div class="options">
+        <label><input type="radio" name="q4" value="A" required> 비교적 안정적이다</label>
+        <label><input type="radio" name="q4" value="B"> 기복이 있는 편이다</label>
+        <label><input type="radio" name="q4" value="C"> 무기력하거나 불안하다</label>
+      </div>
+    </div>
+    <div class="question">
+      <h3>5. 지금 가장 중요한 것은?</h3>
+      <div class="options">
+        <label><input type="radio" name="q5" value="A" required> 나의 방향성과 가치</label>
+        <label><input type="radio" name="q5" value="B"> 감정과 관계</label>
+        <label><input type="radio" name="q5" value="C"> 그냥 버텨내는 것</label>
+      </div>
+    </div>
+    <button type="submit">결과 보기</button>
+  </form>
+
+  <div id="resultBox" class="result-box" style="display:none;"></div>
 
   <script>
-    const questions = [
-      {
-        question: "1. 요즘 나는 사람들과의 연결 속에서...",
-        options: ["자연스럽게 에너지를 주고받는다", "거리를 조절하며 나를 지킨다", "혼자 있는 시간이 더 편하다"]
-      },
-      {
-        question: "2. 나의 하루는 어떤 리듬으로 흘러가고 있나?",
-        options: ["내가 만든 루틴을 따라 흐른다", "필요에 따라 유동적으로 움직인다", "무의식적으로 흘러가는 느낌이다"]
-      },
-      {
-        question: "3. 결정 앞에서 나는...",
-        options: ["나만의 기준이 있고 신중하게 선택한다", "상황과 감정에 따라 융통성 있게 판단한다", "선택 이후에 자주 마음이 바뀌곤 한다"]
-      },
-      {
-        question: "4. 감정과 마주할 때 나는...",
-        options: ["감정을 하나의 신호로 바라보려 한다", "감정에 솔직하되 흘려보낸다", "감정에 끌려가듯 휘둘릴 때가 있다"]
-      },
-      {
-        question: "5. 지금의 나는...",
-        options: ["내가 향하는 방향을 대체로 알고 있다", "흐름 속에서 방향을 찾아가고 있다", "잠시 멈춰 내 흐름을 다시 느껴보고 싶다"]
-      }
-    ];
+    const results = {{
+      "MK": {{
+        title: "MK 중심 흐름",
+        traits: "균형 있는 관계, 자각된 감정, 명확한 방향성",
+        comment: `당신은 지금 흐름의 중심에 있습니다.
+스스로의 방향을 알고 있고, 감정과 관계도 조율하고 있어요.
+MK Protocol은 당신처럼 흐름을 주도하는 사람과 연결되어 더욱 깊은 가치를 만들고 싶습니다.`
+      }},
+      "CONNECTION": {{
+        title: "연결 흐름",
+        traits: "사람과의 에너지, 신뢰, 관계 중심의 흐름",
+        comment: `당신의 흐름은 사람을 향하고 있습니다.
+연결이 당신을 살리고, 당신 또한 누군가에게 연결의 시작점이 됩니다.
+MK는 이 흐름이 흩어지지 않도록 당신 곁에 있습니다.`
+      }},
+      "INDEPENDENT": {{
+        title: "독립 흐름",
+        traits: "나만의 기준, 유연한 루틴, 자기주도적인 선택",
+        comment: `당신은 흐름을 따라가기보다, 스스로 흐름을 만들어갑니다.
+때론 고요하고, 때론 단단한 그 리듬은 당신만의 무기죠.
+MK는 당신의 독립적인 흐름을 존중하고 응원합니다.`
+      }},
+      "RECOVERY": {{
+        title: "회복 흐름",
+        traits: "흔들림과 통찰 사이, 감정과 방향의 재정비 중",
+        comment: `당신은 지금 흐름을 다시 찾는 중입니다.
+아직 완전히 선명하지 않지만, 멈춰선 당신은 이미 변화를 시작했어요.
+MK는 당신이 걷는 이 회복의 흐름을 함께 바라봅니다.`
+      }},
+      "TRANSCEND": {{
+        title: "감정 초월 흐름",
+        traits: "감정 자각, 자기 탐색, 깊이 있는 인식",
+        comment: `당신은 감정을 통제하려 들지 않고, 이해하려고 합니다.
+감정은 당신에게 흐름의 방향을 알려주는 신호이니까요.
+MK는 당신처럼 내면을 다듬는 이와 깊이 연결되고 싶습니다.`
+      }},
+      "WAVERING": {{
+        title: "흔들림 흐름",
+        traits: "감정 기복, 결정의 불안, 루틴의 흐트러짐",
+        comment: `흐름이 일정하지 않더라도 괜찮습니다.
+삶은 늘 완벽할 수 없고, 중요한 건 당신이 ‘지금’을 인식하고 있다는 점이에요.
+MK는 당신의 흔들림을 있는 그대로 받아들입니다.`
+      }},
+      "ESCAPE": {{
+        title: "이탈 흐름",
+        traits: "관계·루틴·감정 모든 측면에서 단절 상태",
+        comment: `당신은 지금 모든 흐름에서 벗어나 있는 상태일 수 있어요.
+하지만 그것도 하나의 흐름입니다.
+MK는 어떤 흐름이든 부정하지 않고, 그 끝에서 다시 시작되는 연결을 기다립니다.`
+      }}
+    }};
 
-    const answers = [];
-    let currentQuestion = 0;
+    const form = document.getElementById("flowTestForm");
+    const resultBox = document.getElementById("resultBox");
 
-    function renderQuestion() {
-      const q = questions[currentQuestion];
-      const quizDiv = document.getElementById("quiz");
-      quizDiv.innerHTML = `
-        <div class="question"><strong>${q.question}</strong></div>
-        <div class="answers">
-          ${q.options.map((opt, idx) => `<button onclick="handleAnswer('${String.fromCharCode(65 + idx)}')">${opt}</button>`).join("")}
+    form.addEventListener("submit", function(e) {{
+      e.preventDefault();
+      const answers = [
+        form.q1.value,
+        form.q2.value,
+        form.q3.value,
+        form.q4.value,
+        form.q5.value
+      ];
+      const pattern = answers.join("");
+
+      let resultType = "MK";
+      if (pattern === "ABAAB" || pattern === "ABBAB") resultType = "CONNECTION";
+      else if (pattern === "ABABA" || pattern === "AABAB") resultType = "INDEPENDENT";
+      else if (pattern === "ACBAC" || pattern === "BCABA") resultType = "RECOVERY";
+      else if (pattern === "BAABB" || pattern === "ABBBA") resultType = "TRANSCEND";
+      else if (pattern === "BCBCC" || pattern === "CBBCB") resultType = "WAVERING";
+      else if (pattern === "CCCCC" || pattern === "CBCCC") resultType = "ESCAPE";
+
+      const result = results[resultType];
+
+      resultBox.innerHTML = `
+        <h2>${{result.title}}</h2>
+        <div class="traits">• ${{
+          result.traits
+        }}</div>
+        <div class="comment">${{result.comment}}</div>
+        <div class="actions">
+          <a href="mk_flow_test.html">다시 해보기</a>
+          <a href="#">결과 공유하기</a>
+          <a href="#">MK 네트워크 보기</a>
         </div>
       `;
-    }
-
-    function handleAnswer(answer) {
-      answers.push(answer);
-      currentQuestion++;
-      if (currentQuestion < questions.length) {
-        renderQuestion();
-      } else {
-        const query = answers.join("");
-        window.location.href = "mk_flow_result.html?flow=" + query;
-      }
-    }
-
-    renderQuestion();
+      resultBox.style.display = "block";
+      resultBox.scrollIntoView({{ behavior: "smooth" }});
+    }});
   </script>
+
 </body>
 </html>
