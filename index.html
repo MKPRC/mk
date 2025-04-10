@@ -2,73 +2,75 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8" />
-    <title>MK Protocol</title>
-    <style>
-        body {
-            background-color: #111;
-            color: gold;
-            font-family: 'Pretendard', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            max-width: 600px;
-            margin: 100px auto;
-            padding: 40px;
-            background-color: #1a1a1a;
-            border-radius: 20px;
-            text-align: center;
-        }
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        .subtitle {
-            font-size: 1rem;
-            font-weight: bold;
-            margin-bottom: 1.5rem;
-            color: #ffd700;
-        }
-        .description {
-            font-size: 0.95rem;
-            color: #ccc;
-            margin-bottom: 2rem;
-        }
-        .button {
-            display: block;
-            width: 80%;
-            margin: 10px auto;
-            padding: 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            background-color: transparent;
-            color: gold;
-            border: 2px solid gold;
-            border-radius: 8px;
-            text-decoration: none;
-            transition: background-color 0.3s ease;
-        }
-        .button:hover {
-            background-color: gold;
-            color: black;
-        }
-        .footer {
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: #888;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MK Protocol</title>
+  <style>
+    body {
+      margin: 0;
+      background-color: #111;
+      color: #f5f5f5;
+      font-family: 'Noto Sans KR', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
+    }
+    .container {
+      max-width: 600px;
+      width: 100%;
+      background: #000;
+      border-radius: 12px;
+      padding: 30px;
+      text-align: center;
+    }
+    h1 {
+      color: #f5c518;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      margin-top: 10px;
+      color: #f5c518;
+      font-weight: bold;
+    }
+    p.hook {
+      margin-top: 15px;
+      color: #fff;
+      font-style: italic;
+      font-size: 0.95em;
+    }
+    a {
+      background: transparent;
+      color: #f5c518;
+      border: 2px solid #f5c518;
+      text-decoration: none;
+      padding: 12px 20px;
+      margin: 10px;
+      border-radius: 5px;
+      display: block;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    footer {
+      margin-top: 30px;
+      color: #777;
+      font-size: 0.9em;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h1>MK</h1>
-        <div class="subtitle">Gold · Auto · Trade · Insurance · Value Networking</div>
-        <div class="description">흐름을 점검하고, 당신의 가치와 연결되는 네트워크를 발견해보세요.</div>
-        <a href="mk_flow_test.html" class="button">나의 흐름 체크해보기</a>
-        <a href="mk_flow_result.html" class="button">MK 흐름보기</a>
-        <a href="mk_protocol.html" class="button">MK Protocol 보기</a>
-        <div class="footer">“크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”</div>
-    </div>
+  <div class="container">
+    <h1>MK</h1>
+    <p class="subtitle">Gold · Auto · Trade · Insurance · Value Networking</p>
+    <p class="hook">흐름을 점검하고, 당신의 가치와 연결되는 네트워크를 발견해보세요.</p>
+
+    <a href="mk_flow_test.html">나의 흐름 체크해보기</a>
+    <a href="mk_philosophy.html">MK 흐름보기</a>
+    <a href="mk_protocol.html">MK Protocol 보기</a>
+
+    <footer>
+      “크게 도움이 되진 못하지만, 언제든 작은 연결이 되고 싶습니다.”
+    </footer>
+  </div>
 </body>
 </html>
