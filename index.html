@@ -4,225 +4,249 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>흐름(Flow) 홈페이지</title>
+  <title>흐름(Flow)</title>
   <link href="https://fonts.googleapis.com/css2?family=Pretendard&display=swap" rel="stylesheet">
   <style>
-    body {{
+    * {
+      box-sizing: border-box;
+    }
+    body {
       margin: 0;
       font-family: 'Pretendard', sans-serif;
       background-color: #f9fafb;
       color: #1f2937;
-    }}
-    h1, h2, h3, h4 {{
+    }
+    h1, h2, h3 {
       margin: 0;
-    }}
-    .hero {{
-      background-color: #fff;
-      padding: 6rem 1.5rem;
+    }
+    .hero {
+      background-color: #ffffff;
+      padding: 6rem 1.5rem 4rem;
       text-align: center;
-    }}
-    .hero h1 {{
+    }
+    .hero h1 {
       font-size: 2.5rem;
       font-weight: bold;
-      margin-bottom: 1.5rem;
-    }}
-    .hero p {{
+      margin-bottom: 1.25rem;
+    }
+    .hero p {
       color: #6b7280;
-      max-width: 36rem;
-      margin: 0 auto 2.5rem;
       font-size: 1.125rem;
-    }}
-    .button-group {{
+      max-width: 38rem;
+      margin: 0 auto 2.5rem;
+    }
+    .buttons {
       display: flex;
-      flex-direction: column;
-      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
       gap: 1rem;
-      margin-bottom: 2rem;
-    }}
-    @media (min-width: 768px) {{
-      .button-group {{
-        flex-direction: row;
-        justify-content: center;
-      }}
-    }}
-    .btn {{
+      margin-bottom: 2.5rem;
+    }
+    .btn {
       padding: 1rem 2rem;
-      font-size: 1rem;
       border-radius: 9999px;
+      font-size: 1rem;
+      font-weight: 500;
       border: none;
       cursor: pointer;
-    }}
-    .btn-outline {{
-      background: none;
+      transition: 0.3s;
+    }
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+    }
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+    .btn-outline {
+      background-color: white;
       color: #2563eb;
       border: 2px solid #2563eb;
-    }}
-    .btn-outline:hover {{
+    }
+    .btn-outline:hover {
       background-color: #eff6ff;
-    }}
-    .sub-notes p {{
+    }
+    .features p {
       font-size: 0.875rem;
       color: #6b7280;
-      margin: 0.25rem 0;
-    }}
-    .sub-notes span {{
-      font-weight: 600;
+      margin: 0.3rem 0;
+    }
+    .features span {
       color: #2563eb;
-    }}
-    .membership {{
-      background-color: #fff;
+      font-weight: 600;
+    }
+    .membership {
       padding: 6rem 1.5rem;
       text-align: center;
-    }}
-    .card-grid {{
+      background-color: #fff;
+    }
+    .membership h2 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+    .membership p {
+      color: #6b7280;
+      margin-bottom: 2rem;
+    }
+    .card-grid {
       display: grid;
       gap: 2rem;
       max-width: 64rem;
       margin: 0 auto;
-    }}
-    @media (min-width: 768px) {{
-      .card-grid {{
+    }
+    @media (min-width: 768px) {
+      .card-grid {
         grid-template-columns: repeat(3, 1fr);
-      }}
-    }}
-    .card {{
-      background-color: #fff;
-      border-radius: 0.5rem;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }}
-    .footer {{
+      }
+    }
+    .card {
+      background-color: white;
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+    }
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .card p {
+      margin: 0.25rem 0;
+    }
+    .card .price {
+      font-size: 1rem;
+      font-weight: bold;
+      margin-top: 0.5rem;
+    }
+    .footer {
       background-color: #111827;
       color: #d1d5db;
+      padding: 4rem 1.5rem;
       font-size: 0.875rem;
-      padding: 3rem 1.5rem;
-    }}
-    .footer-grid {{
+    }
+    .footer-grid {
       display: grid;
-      gap: 2rem;
       max-width: 64rem;
       margin: 0 auto;
-    }}
-    @media (min-width: 768px) {{
-      .footer-grid {{
+      gap: 2rem;
+    }
+    @media (min-width: 768px) {
+      .footer-grid {
         grid-template-columns: repeat(3, 1fr);
-        text-align: left;
-      }}
-    }}
-    .footer h4 {{
+      }
+    }
+    .footer h4 {
       font-weight: 700;
       margin-bottom: 0.5rem;
-    }}
-    .footer ul {{
+    }
+    .footer ul {
       list-style: none;
       padding: 0;
-      margin: 0;
-    }}
-    .footer ul li {{
+    }
+    .footer li {
       margin: 0.25rem 0;
-    }}
-    .footer-bottom {{
+    }
+    .footer-bottom {
       border-top: 1px solid #374151;
       margin-top: 2rem;
       padding-top: 1.5rem;
       text-align: center;
       color: #9ca3af;
-    }}
+    }
   </style>
 </head>
 <body>
 
-<div class="hero">
-  <h1>흐름(Flow), 지금 시작합니다.</h1>
-  <p>금의 가치, 사람의 가치, 기술의 가치를 연결하는 조율형 브랜드 – 흐름(Flow)</p>
-  <div class="button-group">
-    <button class="btn" onclick="scrollToMembership()">흐름 멤버십 알아보기</button>
-    <button class="btn btn-outline" onclick="scrollToMembership()">나에게 맞는 흐름 시작하기</button>
-  </div>
-  <div class="sub-notes">
-    <p><span>2.1배 빠른 연결</span> – Flow 구독자 후기</p>
-    <p><span>차량 구매 + Gold 혜택</span> – Flow+ 이용자 체감</p>
-    <p><span>가치의 전환점 경험</span> – Flow Gold 실사용 리뷰</p>
-  </div>
-</div>
+  <section class="hero">
+    <h1>흐름(Flow), 지금 시작합니다.</h1>
+    <p>금의 가치, 사람의 가치, 기술의 가치를 연결하는 조율형 브랜드 – 흐름(Flow)</p>
+    <div class="buttons">
+      <button class="btn btn-primary" onclick="scrollToMembership()">흐름 멤버십 알아보기</button>
+      <button class="btn btn-outline" onclick="scrollToMembership()">나에게 맞는 흐름 시작하기</button>
+    </div>
+    <div class="features">
+      <p><span>2.1배 빠른 연결</span> – Flow 구독자 후기</p>
+      <p><span>차량 구매 + Gold 혜택</span> – Flow+ 이용자 체감</p>
+      <p><span>가치의 전환점 경험</span> – Flow Gold 실사용 리뷰</p>
+    </div>
+  </section>
 
-<div id="membership-section" class="membership">
-  <h2 class="text-3xl font-bold mb-2">흐름 멤버십 가입</h2>
-  <p class="text-gray-600 mb-12 text-lg">
-    당신의 흐름에 맞는 가치를 전달하는 구독형 조율 플랫폼 – 흐름(Flow)
-  </p>
-  <div class="card-grid">
-    <div class="card">
-      <h3>Flow Basic</h3>
-      <p>뉴스레터, 도구 추천, 흐름 인사이트 제공</p>
-      <p><strong>₩9,900 / 월</strong></p>
-      <button class="btn">가입하기</button>
+  <section id="membership-section" class="membership">
+    <h2>흐름 멤버십 가입</h2>
+    <p>당신의 흐름에 맞는 가치를 전달하는 구독형 조율 플랫폼 – 흐름(Flow)</p>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Flow Basic</h3>
+        <p>뉴스레터, 도구 추천, 흐름 인사이트 제공</p>
+        <p class="price">₩9,900 / 월</p>
+        <button class="btn btn-primary">가입하기</button>
+      </div>
+      <div class="card">
+        <h3>Flow+</h3>
+        <p>1:1 조율 세션 월 1회 + 콘텐츠 우선 제공</p>
+        <p class="price">₩29,000 / 월</p>
+        <button class="btn btn-primary">가입하기</button>
+      </div>
+      <div class="card">
+        <h3>Flow Gold</h3>
+        <p>웹제작, 금·차 컨시어지, 기술 파트너링 지원</p>
+        <p class="price">₩79,000 / 월</p>
+        <button class="btn btn-primary">가입하기</button>
+      </div>
     </div>
-    <div class="card">
-      <h3>Flow+</h3>
-      <p>1:1 조율 세션 월 1회 + 콘텐츠 우선 제공</p>
-      <p><strong>₩29,000 / 월</strong></p>
-      <button class="btn">가입하기</button>
-    </div>
-    <div class="card">
-      <h3>Flow Gold</h3>
-      <p>웹제작, 금·차 컨시어지, 기술 파트너링 지원</p>
-      <p><strong>₩79,000 / 월</strong></p>
-      <button class="btn">가입하기</button>
-    </div>
-  </div>
-</div>
+  </section>
 
-<footer class="footer">
-  <div class="footer-grid">
-    <div>
-      <h4>조율 서비스</h4>
-      <ul>
-        <li>AI 개발 지원</li>
-        <li>자동차 연계</li>
-        <li>금 라인 컨시어지</li>
-        <li>철학/조율 상담</li>
-      </ul>
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <h4>조율 서비스</h4>
+        <ul>
+          <li>AI 개발 지원</li>
+          <li>자동차 연계</li>
+          <li>금 라인 컨시어지</li>
+          <li>철학/조율 상담</li>
+        </ul>
+      </div>
+      <div>
+        <h4>고객센터</h4>
+        <ul>
+          <li>자주 묻는 질문</li>
+          <li>문의하기</li>
+          <li>이벤트 및 공지</li>
+          <li>이용가이드</li>
+        </ul>
+      </div>
+      <div>
+        <h4>마이 페이지</h4>
+        <ul>
+          <li>구독 상태 확인</li>
+          <li>상담 기록 보기</li>
+          <li>결제 내역</li>
+        </ul>
+      </div>
     </div>
-    <div>
-      <h4>고객센터</h4>
-      <ul>
-        <li>자주 묻는 질문</li>
-        <li>문의하기</li>
-        <li>이벤트 및 공지</li>
-        <li>이용가이드</li>
-      </ul>
+    <div class="footer-bottom">
+      <p>사이트맵 | 이용약관 | 개인정보처리방침 | 저작권안내</p>
+      <p>
+        ⓒ 2025 흐름(Flow) | 조율된 흐름은 가치를 만듭니다.<br>
+        대표자: 김무경 | 사업자등록번호: 829-87-03239<br>
+        대구광역시 북구 침산로 229-1 1층 | Fax: 0303-3440-3444<br>
+        중소기업확인서 및 기타 서류는 고객 요청 시 제공합니다.<br>
+        통신판매업신고번호: 제2025-대구북구-XXXX호
+      </p>
     </div>
-    <div>
-      <h4>마이 페이지</h4>
-      <ul>
-        <li>구독 상태 확인</li>
-        <li>상담 기록 보기</li>
-        <li>결제 내역</li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>사이트맵 | 이용약관 | 개인정보처리방침 | 저작권안내</p>
-    <p class="mt-2">
-      ⓒ 2025 흐름(Flow) | 조율된 흐름은 가치를 만듭니다.<br />
-      대표자: 김무경 | 사업자등록번호: 829-87-03239<br />
-      대구광역시 북구 침산로 229-1 1층 | Fax: 0303-3440-3444<br />
-      중소기업확인서 및 기타 서류는 고객 요청 시 제공합니다.<br />
-      통신판매업신고번호: 제2025-대구북구-XXXX호
-    </p>
-  </div>
-</footer>
+  </footer>
 
-<script>
-  function scrollToMembership() {{
-    document.getElementById("membership-section").scrollIntoView({{ behavior: "smooth" }});
-  }}
-</script>
+  <script>
+    function scrollToMembership() {
+      document.getElementById("membership-section").scrollIntoView({ behavior: "smooth" });
+    }
+  </script>
 
 </body>
 </html>
+    
