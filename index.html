@@ -250,4 +250,18 @@
 
 </body>
 </html>
-    
+   <script src="https://js.tosspayments.com/v1/payment"></script>
+<script>
+  function openToss() {
+    const tossPayments = TossPayments("test_ck_DnyRpQWGrN6D4yo1Xva0rKwv1M9E");
+    tossPayments.requestPayment("카드", {
+      amount: 100,
+      orderId: "flow-test-order-001",
+      orderName: "Flow Test 상품",
+      customerName: "김무경",
+      successUrl: "https://mkprotocol.com/success",
+      failUrl: "https://mkprotocol.com/fail"
+    });
+  }
+</script>
+ 
