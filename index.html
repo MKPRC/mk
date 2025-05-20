@@ -183,7 +183,7 @@
         <h3>Flow Basic</h3>
         <p>뉴스레터, 도구 추천, 흐름 인사이트 제공</p>
         <p class="price">₩9,900 / 월</p>
-        <button class="btn btn-primary">가입하기</button>
+<button class="btn btn-primary" onclick="openToss()">가입하기</button>
       </div>
       <div class="card">
         <h3>Flow+</h3>
@@ -247,10 +247,7 @@
       document.getElementById("membership-section").scrollIntoView({ behavior: "smooth" });
     }
   </script>
-
-</body>
-</html>
-   <script src="https://js.tosspayments.com/v1/payment"></script>
+<script src="https://js.tosspayments.com/v1/payment"></script>
 <script>
   function openToss() {
     const tossPayments = TossPayments("test_ck_DnyRpQWGrN6D4yo1Xva0rKwv1M9E");
@@ -264,4 +261,9 @@
     });
   }
 </script>
+
+</body>
+</html>
+
+
  
