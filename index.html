@@ -189,13 +189,13 @@
         <h3>Flow+</h3>
         <p>1:1 조율 세션 월 1회 + 콘텐츠 우선 제공</p>
         <p class="price">₩29,000 / 월</p>
-        <button class="btn btn-primary">가입하기</button>
+        <button class="btn btn-primary" onclick="openTossPlus()">가입하기</button>
       </div>
       <div class="card">
         <h3>Flow Gold</h3>
         <p>웹제작, 금·차 컨시어지, 기술 파트너링 지원</p>
         <p class="price">₩79,000 / 월</p>
-        <button class="btn btn-primary">가입하기</button>
+        <button class="btn btn-primary" onclick="openTossGold()">가입하기</button>
       </div>
     </div>
 
@@ -251,22 +251,111 @@
   </script>
 <script src="https://js.tosspayments.com/v1/payment"></script>
 <script>
-  function openToss() {
-    const tossPayments = TossPayments("test_ck_DnyRpQWGrN6D4yo1Xva0rKwv1M9E");
+  // 토스 정기결제 클라이언트 초기화
+  const clientKey = "test_ck_DnyRpQWGrN6D4yo1Xva0rKwv1M9E"; // 실제 서비스에서는 라이브 키로 변경
+  const tossPayments = TossPayments(clientKey);
 
-    const membership = "Flow Basic";
-    const amount = 9900;
-    const customerKey = `customer-${Date.now()}`;
+  // 멤버십 정보 설정
+  const membershipPlans = {
+    'Flow Basic': {
+      amount: 9900,
+      name: 'Flow Basic',
+      description: '뉴스레터, 도구 추천, 흐름 인사이트 제공'
+    },
+    'Flow+': {
+      amount: 29000,
+      name: 'Flow+',
+      description: '1:1 조율 세션 월 1회 + 콘텐츠 우선 제공'
+    },
+    'Flow Gold': {
+      amount: 79000,
+      name: 'Flow Gold',
+      description: '웹제작, 금·차 컨시어지, 기술 파트너링 지원'
+    }
+  };
 
-    const successUrl =
-      `https://mkprotocol.com/billing-success.html?membership=${encodeURIComponent(membership)}&amount=${amount}&customerKey=${customerKey}`;
+  // 정기결제 빌링 인증 요청
+  function requestBillingAuth(membershipType) {
+    const membership = membershipPlans[membershipType];
+    if (!membership) {
+      alert('잘못된 멤버십 타입입니다.');
+      return;
+    }
+
+    const customerKey = `customer-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+    
+    const successUrl = `https://mkprotocol.com/billing-success.html?membership=${encodeURIComponent(membershipType)}&amount=${membership.amount}&customerKey=${customerKey}`;
     const failUrl = "https://mkprotocol.com/fail.html";
 
-    tossPayments.requestBillingAuth("카드", {
-      customerKey,
-      successUrl,
-      failUrl
+    console.log('정기결제 빌링 인증 요청:', {
+      membershipType,
+      amount: membership.amount,
+      customerKey
     });
+
+    tossPayments.requestBillingAuth("카드", {
+      customerKey: customerKey,
+      successUrl: successUrl,
+      failUrl: failUrl
+    }).catch(function (error) {
+      console.error('빌링 인증 요청 실패:', error);
+      alert('결제 요청 중 오류가 발생했습니다. 다시 시도해주세요.');
+    });
+  }
+
+  // 기존 openToss 함수 (Flow Basic용)
+  function openToss() {
+    requestBillingAuth('Flow Basic');
+  }
+
+  // 다른 멤버십용 결제 함수들
+  function openTossPlus() {
+    requestBillingAuth('Flow+');
+  }
+
+  function openTossGold() {
+    requestBillingAuth('Flow Gold');
+  }
+
+  // 정기결제 실행 함수 (서버에서 호출되어야 함)
+  function executeRecurringPayment(billingKey, customerKey, amount, orderName) {
+    // 실제로는 서버에서 실행되어야 하는 부분
+    // 여기서는 클라이언트 측 예시 코드만 제공
+    console.log('정기결제 실행 예시:', {
+      billingKey,
+      customerKey,
+      amount,
+      orderName
+    });
+    
+    // 서버 API 호출 예시
+    /*
+    fetch('/api/billing/execute', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        billingKey,
+        customerKey,
+        amount,
+        orderName
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log('정기결제 실행 결과:', data);
+    })
+    .catch(error => {
+      console.error('정기결제 실행 실패:', error);
+    });
+    */
+  }
+
+  // 빌링키 확인 함수
+  function checkBillingKey(customerKey) {
+    // 실제로는 서버에서 확인되어야 하는 부분
+    console.log('빌링키 확인:', customerKey);
   }
 </script>
 
