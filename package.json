@@ -1,0 +1,49 @@
+{
+  "name": "flow-homepage-wwwmkinc",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^15.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "framer-motion": "^10.16.4",
+    "@supabase/supabase-js": "^2.38.0",
+    "@supabase/ssr": "^0.5.1",
+    "axios": "^1.6.0",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "uuid": "^9.0.0",
+    "node-cron": "^3.0.2",
+    "js-cookie": "^3.0.5",
+    "clsx": "^2.0.0",
+    "tailwindcss": "^3.3.5",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "@hookform/resolvers": "^3.3.2",
+    "react-hook-form": "^7.48.2",
+    "zod": "^3.22.4",
+    "lucide-react": "^0.292.0",
+    "class-variance-authority": "^0.7.0",
+    "@tanstack/react-query": "^5.8.1",
+    "@tosspayments/payment-sdk": "^1.8.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3",
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/bcryptjs": "^2.4.4",
+    "@types/jsonwebtoken": "^9.0.3",
+    "@types/uuid": "^9.0.4",
+    "@types/js-cookie": "^3.0.4",
+    "eslint": "^8.51.0",
+    "eslint-config-next": "^15.0.0",
+    "@feature-sliced/eslint-config": "^0.1.0-beta.6"
+  }
+}
