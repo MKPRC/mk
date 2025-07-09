@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createServerClient } from '@/shared/config/database';
+import { createClient } from '@supabase/supabase-js';
 
 export async function POST(request: NextRequest) {
   try {
@@ -21,8 +21,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // 서버 클라이언트 생성
-    const supabase = createServerClient();
+    // Service Role Key로 Supabase 클라이언트 생성 (RLS 우회)
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    );
 
     // 요청 헤더에서 Authorization 토큰 가져오기
     const authHeader = request.headers.get('authorization');
@@ -62,17 +65,48 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: '프로필 조회 실패' }, { status: 500 });
     }
 
-    // user_profiles 테이블 업데이트
-    const { data: updateData, error: profileUpdateError } = await supabase
-      .from('user_profiles')
-      .update({ 
-        phone: phone,
-        updated_at: new Date().toISOString()
-      })
-      .eq('user_id', user.id)
-      .select();
+    let profileData;
+    let profileUpdateError;
 
-    console.log('업데이트 결과:', updateData);
+    if (existingProfile) {
+      // 기존 프로필이 있는 경우 UPDATE
+      const { data: updateData, error: updateError } = await supabase
+        .from('user_profiles')
+        .update({ 
+          phone: phone,
+          updated_at: new Date().toISOString()
+        })
+        .eq('user_id', user.id)
+        .select();
+
+      profileData = updateData;
+      profileUpdateError = updateError;
+      console.log('기존 프로필 업데이트 결과:', updateData);
+    } else {
+      // 프로필이 없는 경우 INSERT (새로 생성)
+      const profileInsertData = {
+        user_id: user.id,
+        display_name: user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || '사용자',
+        email: user.email,
+        phone: phone,
+        kakao_id: user.app_metadata?.provider === 'kakao' ? (user.user_metadata?.provider_id || user.user_metadata?.sub) : null,
+        naver_id: user.app_metadata?.provider === 'naver' ? (user.user_metadata?.provider_id || user.user_metadata?.sub) : null,
+        marketing_consent: false,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      };
+
+      const { data: insertData, error: insertError } = await supabase
+        .from('user_profiles')
+        .insert([profileInsertData])
+        .select();
+
+      profileData = insertData;
+      profileUpdateError = insertError;
+      console.log('새 프로필 생성 결과:', insertData);
+    }
+
+    console.log('최종 업데이트 결과:', profileData);
     console.log('업데이트 오류:', profileUpdateError);
 
     if (profileUpdateError) {
@@ -82,7 +116,7 @@ export async function POST(request: NextRequest) {
         details: profileUpdateError.message 
       }, { status: 500 });
     } else {
-      console.log('user_profiles 테이블 핸드폰번호 업데이트 성공:', updateData);
+      console.log('user_profiles 테이블 핸드폰번호 업데이트 성공:', profileData);
     }
 
     console.log('user_profiles 테이블 핸드폰번호 업데이트 완료:', { userId: user.id, phone });

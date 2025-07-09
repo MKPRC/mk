@@ -32,7 +32,7 @@ const updateUserProfile = async (user: any) => {
       }
     }
 
-    // 2. 현재 user_id로 사용자가 존재하면 업데이트
+    // 2. 현재 user_id로 사용자가 존재하면 업데이트 (기존 사용자)
     if (currentUser) {
       
       const { data: updatedUser, error: updateError } = await supabase
@@ -52,7 +52,7 @@ const updateUserProfile = async (user: any) => {
         throw updateError;
       }
       
-      return;
+      return { isNewUser: false, userProfile: updatedUser?.[0] };
     }
 
     // 3. 소셜 ID로 기존 사용자 검색 (재가입 처리)
@@ -113,7 +113,7 @@ const updateUserProfile = async (user: any) => {
         throw reactivateError;
       }
       
-      return;
+      return { isNewUser: false, userProfile: reactivatedUser?.[0] };
     }
 
     // 5. 완전히 새로운 사용자 생성
@@ -132,6 +132,8 @@ const updateUserProfile = async (user: any) => {
       console.error('전체 오류 객체:', JSON.stringify(createError, null, 2));
       throw createError;
     }
+
+    return { isNewUser: true, userProfile: newUser?.[0] };
 
   } catch (error) {
     console.error('user_profiles 업데이트 중 오류:', error);
@@ -192,8 +194,9 @@ export default function AuthCallbackClientPage() {
         }
         
         // user_profiles 테이블에 사용자 정보 저장/업데이트
+        let profileResult = null;
         try {
-          await updateUserProfile(user);
+          profileResult = await updateUserProfile(user);
         } catch (profileError) {
           console.error('user_profiles 업데이트 오류:', profileError);
           // 프로필 업데이트 실패해도 로그인은 계속 진행
@@ -201,19 +204,39 @@ export default function AuthCallbackClientPage() {
         
         setStatus('success');
         
-        // 핸드폰번호 확인 (알림톡 발송을 위해 필요)
-        const userPhone = user?.phone || user?.user_metadata?.phone;
+        console.log('로그인 제공자:', user?.app_metadata?.provider);
+        console.log('프로필 업데이트 결과:', profileResult);
         
-        // 핸드폰번호가 없으면 핸드폰번호 입력 페이지로 리다이렉트
-        if (!userPhone) {
+        // 리다이렉트 로직
+        if (!profileResult) {
+          // 프로필 업데이트 실패한 경우 안전하게 핸드폰번호 입력 페이지로
+          console.log('프로필 업데이트 실패 → 핸드폰번호 입력 페이지로 이동');
           setTimeout(() => {
             router.replace('/auth/phone-input');
-          }, 1000);
-        } else {
-          // 핸드폰번호가 있으면 홈페이지로 리다이렉트
+          }, 500);
+        } else if (profileResult.isNewUser) {
+          // 첫 회원가입인 경우 무조건 핸드폰번호 입력 페이지로
+          console.log('첫 회원가입 사용자 → 핸드폰번호 입력 페이지로 이동');
           setTimeout(() => {
-            router.replace('/');
-          }, 1000);
+            router.replace('/auth/phone-input');
+          }, 500);
+        } else {
+          // 기존 사용자인 경우 핸드폰번호 체크
+          const userPhone = profileResult.userProfile?.phone;
+          
+          console.log('기존 사용자 - 핸드폰번호:', userPhone);
+          
+          if (!userPhone) {
+            console.log('기존 사용자이지만 핸드폰번호 없음 → 핸드폰번호 입력 페이지로 이동');
+            setTimeout(() => {
+              router.replace('/auth/phone-input');
+            }, 500);
+          } else {
+            console.log('기존 사용자이고 핸드폰번호 있음 → 홈으로 이동');
+            setTimeout(() => {
+              router.replace('/');
+            }, 500);
+          }
         }
 
       } catch (error) {

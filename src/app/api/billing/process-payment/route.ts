@@ -165,25 +165,57 @@ export async function POST(request: NextRequest) {
 
     // 구독 완료 알림톡 발송 (비동기)
     try {
+      console.log('알림톡 발송 시작 - 사용자 ID:', userId);
+      
       // 사용자 정보 가져오기
-      const { data: userProfile } = await supabase
+      const { data: userProfile, error: profileError } = await supabase
         .from('user_profiles')
         .select('display_name, phone')
         .eq('user_id', userId)
-        .single();
+        .maybeSingle();
 
-      if (userProfile && userProfile.phone) {
+      console.log('사용자 프로필 조회 결과:', { userProfile, profileError });
+
+      // 사용자 인증 정보에서 전화번호 가져오기 (프로필에 없는 경우 백업)
+      const { data: authUserData } = await supabase.auth.admin.getUserById(userId);
+      const authUser = authUserData?.user;
+      
+      console.log('사용자 인증 정보:', {
+        phone: authUser?.phone,
+        user_metadata_phone: authUser?.user_metadata?.phone,
+        user_metadata_name: authUser?.user_metadata?.name
+      });
+
+      // 전화번호 우선순위: 프로필 > 인증 정보 > 메타데이터
+      const phone = userProfile?.phone || authUser?.phone || authUser?.user_metadata?.phone;
+      const name = userProfile?.display_name || authUser?.user_metadata?.name || authUser?.email?.split('@')[0] || '고객';
+
+      console.log('알림톡 발송 대상:', { phone, name });
+
+      if (phone) {
         // 다음 결제일 계산
         const nextBillingDate = new Date();
         nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
         const nextBillingDateStr = nextBillingDate.toLocaleDateString('ko-KR');
 
-        await alimtalkService.sendSubscriptionSuccess(userProfile.phone, {
-          name: userProfile.display_name || '고객',
+        console.log('알림톡 발송 시도:', {
+          phone,
+          name,
+          membershipType: planName,
+          amount,
+          nextBillingDate: nextBillingDateStr
+        });
+
+        await alimtalkService.sendSubscriptionSuccess(phone, {
+          name,
           membershipType: planName, // planName 사용 (Flow Basic, Flow+, Flow Gold)
           amount: amount,
           nextBillingDate: nextBillingDateStr,
         });
+        
+        console.log('알림톡 발송 성공');
+      } else {
+        console.log('전화번호가 없어서 알림톡 발송 건너뜀');
       }
     } catch (notificationError) {
       console.error('구독 완료 알림톡 발송 오류:', notificationError);
