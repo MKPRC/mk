@@ -1,4 +1,13 @@
 import { Payment, PaymentFilters, PaymentStatistics } from '@/entities/admin/payment/types';
+import { supabase } from '@/shared/config/database';
+
+async function getAuthHeaders() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return {
+    'Authorization': `Bearer ${session?.access_token}`,
+    'Content-Type': 'application/json',
+  };
+}
 
 export async function fetchPayments(filters: PaymentFilters): Promise<{ 
   payments: Payment[];
@@ -12,7 +21,8 @@ export async function fetchPayments(filters: PaymentFilters): Promise<{
   if (filters.startDate) params.append('startDate', filters.startDate);
   if (filters.endDate) params.append('endDate', filters.endDate);
   
-  const response = await fetch(`/api/admin/payments?${params}`);
+  const headers = await getAuthHeaders();
+  const response = await fetch(`/api/admin/payments?${params}`, { headers });
   const data = await response.json();
   
   if (!response.ok) {

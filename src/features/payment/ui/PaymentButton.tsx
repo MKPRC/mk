@@ -123,7 +123,7 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({ plan }) => {
             : 'bg-blue-600 hover:bg-blue-700 text-white'
         }`}
       >
-        {isLoading ? '처리 중...' : '카드 등록하기'}
+        {isLoading ? '처리 중...' : '구독하기'}
       </button>
 
       {showLoginModal && (

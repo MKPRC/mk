@@ -1,8 +1,18 @@
 import { DashboardStats } from '@/entities/admin/user/types';
 import { UserProfile } from '@/entities/admin/user/types';
+import { supabase } from '@/shared/config/database';
+
+async function getAuthHeaders() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return {
+    'Authorization': `Bearer ${session?.access_token}`,
+    'Content-Type': 'application/json',
+  };
+}
 
 export async function fetchDashboardStats(): Promise<DashboardStats> {
-  const response = await fetch('/api/admin/stats');
+  const headers = await getAuthHeaders();
+  const response = await fetch('/api/admin/stats', { headers });
   const data = await response.json();
   
   if (!response.ok) {
@@ -13,7 +23,8 @@ export async function fetchDashboardStats(): Promise<DashboardStats> {
 }
 
 export async function fetchUsers(): Promise<{ users: UserProfile[] }> {
-  const response = await fetch('/api/admin/users');
+  const headers = await getAuthHeaders();
+  const response = await fetch('/api/admin/users', { headers });
   const data = await response.json();
   
   if (!response.ok) {

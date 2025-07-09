@@ -9,8 +9,26 @@ export async function GET(request: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
     
-    // 관리자 인증 확인
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    // Authorization 헤더에서 토큰 추출
+    const authHeader = request.headers.get('Authorization');
+    let user = null;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        // 일반 클라이언트로 토큰 검증
+        const authClient = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        );
+        const { data: { user: tokenUser }, error: tokenError } = await authClient.auth.getUser(token);
+        if (!tokenError && tokenUser) {
+          user = tokenUser;
+        }
+      } catch (error) {
+        console.error('토큰 검증 오류:', error);
+      }
+    }
     
     console.log('현재 사용자:', user?.email);
     console.log('개발 환경:', process.env.NODE_ENV);
@@ -19,7 +37,7 @@ export async function GET(request: NextRequest) {
     if (process.env.NODE_ENV === 'development') {
       console.log('개발 환경에서 권한 확인 우회');
     } else {
-      if (userError || !user) {
+      if (!user) {
         return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
       }
 
@@ -199,8 +217,26 @@ export async function PATCH(request: NextRequest) {
       process.env.SUPABASE_SERVICE_ROLE_KEY!
     );
     
-    // 관리자 인증 확인
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    // Authorization 헤더에서 토큰 추출
+    const authHeader = request.headers.get('Authorization');
+    let user = null;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        // 일반 클라이언트로 토큰 검증
+        const authClient = createClient(
+          process.env.NEXT_PUBLIC_SUPABASE_URL!,
+          process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        );
+        const { data: { user: tokenUser }, error: tokenError } = await authClient.auth.getUser(token);
+        if (!tokenError && tokenUser) {
+          user = tokenUser;
+        }
+      } catch (error) {
+        console.error('토큰 검증 오류:', error);
+      }
+    }
     
     console.log('PATCH - 현재 사용자:', user?.email);
     console.log('PATCH - 개발 환경:', process.env.NODE_ENV);
@@ -209,7 +245,7 @@ export async function PATCH(request: NextRequest) {
     if (process.env.NODE_ENV === 'development') {
       console.log('개발 환경에서 권한 확인 우회');
     } else {
-      if (userError || !user) {
+      if (!user) {
         return NextResponse.json({ error: '인증이 필요합니다.' }, { status: 401 });
       }
 

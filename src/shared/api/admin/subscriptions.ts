@@ -1,4 +1,13 @@
 import { Subscription, SubscriptionFilters } from '@/entities/admin/subscription/types';
+import { supabase } from '@/shared/config/database';
+
+async function getAuthHeaders() {
+  const { data: { session } } = await supabase.auth.getSession();
+  return {
+    'Authorization': `Bearer ${session?.access_token}`,
+    'Content-Type': 'application/json',
+  };
+}
 
 export async function fetchSubscriptions(filters: SubscriptionFilters): Promise<{ subscriptions: Subscription[] }> {
   const params = new URLSearchParams();
@@ -7,7 +16,8 @@ export async function fetchSubscriptions(filters: SubscriptionFilters): Promise<
   if (filters.membershipType) params.append('membershipType', filters.membershipType);
   if (filters.search) params.append('search', filters.search);
   
-  const response = await fetch(`/api/admin/subscriptions?${params}`);
+  const headers = await getAuthHeaders();
+  const response = await fetch(`/api/admin/subscriptions?${params}`, { headers });
   const data = await response.json();
   
   if (!response.ok) {
@@ -18,11 +28,10 @@ export async function fetchSubscriptions(filters: SubscriptionFilters): Promise<
 }
 
 export async function updateSubscriptionStatus(subscriptionId: string, status: string): Promise<void> {
+  const headers = await getAuthHeaders();
   const response = await fetch('/api/admin/subscriptions', {
     method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     body: JSON.stringify({
       subscriptionId,
       status

@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/shared/lib/supabase/server';
 import { createClient as createSupabaseClient } from '@supabase/supabase-js';
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
     const supabase = createClient();
     
@@ -26,18 +26,30 @@ export async function GET() {
       }
     );
 
-    // 관리자 권한 확인 (개발 환경에서는 우회 가능)
-    const { data: { user }, error: userError } = await supabase.auth.getUser();
+    // Authorization 헤더에서 토큰 추출
+    const authHeader = request.headers.get('Authorization');
+    let user = null;
+    
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const token = authHeader.substring(7);
+      try {
+        const { data: { user: tokenUser }, error: tokenError } = await supabase.auth.getUser(token);
+        if (!tokenError && tokenUser) {
+          user = tokenUser;
+        }
+      } catch (error) {
+        console.error('토큰 검증 오류:', error);
+      }
+    }
     
     console.log('현재 사용자:', user?.email);
-    console.log('사용자 인증 오류:', userError);
     console.log('개발 환경:', process.env.NODE_ENV);
     
     // 개발 환경에서는 권한 확인 우회
     if (process.env.NODE_ENV === 'development') {
       console.log('개발 환경에서 권한 확인 우회');
     } else {
-      if (userError || !user) {
+      if (!user) {
         return NextResponse.json({ error: '인증되지 않은 사용자입니다.' }, { status: 401 });
       }
       
