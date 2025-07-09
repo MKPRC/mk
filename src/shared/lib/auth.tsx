@@ -57,10 +57,15 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithKakao = async () => {
     try {
+      // 개발 환경에서는 localhost, 배포 환경에서는 실제 도메인 사용
+      const redirectUrl = process.env.NODE_ENV === 'development' 
+        ? `${window.location.origin}/auth/callback`
+        : `https://www.mkprotocol.com/auth/callback`;
+        
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'kakao',
         options: {
-          redirectTo: `${window.location.origin}/auth/callback`,
+          redirectTo: redirectUrl,
         },
       });
 
