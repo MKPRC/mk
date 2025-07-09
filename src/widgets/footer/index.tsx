@@ -56,7 +56,7 @@ export const Footer: React.FC = () => {
             </p>
             
             <p className="text-sm">
-              회사명: 주식회사 흐름
+              상호명: 주식회사 엠케이아엔시(MKINC)
             </p>
             <p className="text-sm">
               대표자: 김무경 | 사업자등록번호: 829-87-03239
