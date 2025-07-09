@@ -57,10 +57,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const signInWithKakao = async () => {
     try {
-      // 개발 환경에서는 localhost, 배포 환경에서는 실제 도메인 사용
-      const redirectUrl = process.env.NODE_ENV === 'development' 
-        ? `${window.location.origin}/auth/callback`
-        : `https://www.mkprotocol.com/auth/callback`;
+      // 임시로 라이브 환경에서는 무조건 실제 도메인으로 리다이렉트
+      const redirectUrl = `https://www.mkprotocol.com/auth/callback`;
+        
+      console.log('카카오 로그인 redirect URL:', redirectUrl);
         
       const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'kakao',

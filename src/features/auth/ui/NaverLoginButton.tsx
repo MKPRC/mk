@@ -16,10 +16,10 @@ export const NaverLoginButton: React.FC<NaverLoginButtonProps> = ({
   const handleNaverInit = useCallback(() => {
     if (typeof window === 'undefined' || !window.naver) return;
 
-    // 개발 환경에서는 localhost, 배포 환경에서는 실제 도메인 사용
-    const callbackUrl = process.env.NODE_ENV === 'development' 
-      ? `${window.location.origin}/auth/naver/callback`
-      : `https://www.mkprotocol.com/auth/naver/callback`;
+    // 임시로 라이브 환경에서는 무조건 실제 도메인으로 리다이렉트
+    const callbackUrl = `https://www.mkprotocol.com/auth/naver/callback`;
+
+    console.log('네이버 로그인 callback URL:', callbackUrl);
 
     const naver = window.naver;
     const naverLogin = new naver.LoginWithNaverId({
