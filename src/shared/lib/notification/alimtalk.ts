@@ -85,7 +85,7 @@ export class AlimtalkService {
     name: string;
     membershipType: string;
     amount: number;
-    nextBillingDate: string;
+    billingDate: string;
   }): Promise<AlimtalkResponse> {
     const templateId = process.env.ALIMTALK_TEMPLATE_PAYMENT_SUCCESS || 'test_template';
     
@@ -102,7 +102,7 @@ export class AlimtalkService {
 흐름(Flow) 구독이 정상적으로 완료되었습니다.
 
 🧾 플랜: ${data.membershipType}
-💳 결제일: ${data.nextBillingDate}
+💳 결제일: ${data.billingDate}
 
 흐름은 단순한 서비스가 아닙니다.
 함께 흐르는 변화를 만드는 공간입니다.
@@ -110,7 +110,7 @@ export class AlimtalkService {
 
 감사합니다 🙏`,
       smsKind: 'L',
-      msgSms: `흐름(Flow) 구독이 완료되었습니다. 플랜: ${data.membershipType}, 결제일: ${data.nextBillingDate}`,
+      msgSms: `흐름(Flow) 구독이 완료되었습니다. 플랜: ${data.membershipType}, 결제일: ${data.billingDate}`,
       smsSender: '15446644'
     };
 

@@ -193,24 +193,23 @@ export async function POST(request: NextRequest) {
       console.log('알림톡 발송 대상:', { phone, name });
 
       if (phone) {
-        // 다음 결제일 계산
-        const nextBillingDate = new Date();
-        nextBillingDate.setMonth(nextBillingDate.getMonth() + 1);
-        const nextBillingDateStr = nextBillingDate.toLocaleDateString('ko-KR');
+        // 현재 결제 날짜 (오늘)
+        const currentBillingDate = new Date();
+        const currentBillingDateStr = currentBillingDate.toLocaleDateString('ko-KR');
 
         console.log('알림톡 발송 시도:', {
           phone,
           name,
           membershipType: planName,
           amount,
-          nextBillingDate: nextBillingDateStr
+          billingDate: currentBillingDateStr
         });
 
         await alimtalkService.sendSubscriptionSuccess(phone, {
           name,
           membershipType: planName, // planName 사용 (Flow Basic, Flow+, Flow Gold)
           amount: amount,
-          nextBillingDate: nextBillingDateStr,
+          billingDate: currentBillingDateStr,
         });
         
         console.log('알림톡 발송 성공');
