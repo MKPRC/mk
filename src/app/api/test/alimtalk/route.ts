@@ -3,7 +3,7 @@ import { alimtalkService } from '@/shared/lib/notification/alimtalk';
 
 export async function POST(request: NextRequest) {
   try {
-    const { phone, name, membershipType, amount, nextBillingDate } = await request.json();
+    const { phone, name, membershipType, amount, billingDate } = await request.json();
 
     if (!phone) {
       return NextResponse.json({ error: '전화번호가 필요합니다.' }, { status: 400 });
@@ -14,14 +14,14 @@ export async function POST(request: NextRequest) {
       name: name || '고객',
       membershipType: membershipType || 'Premium',
       amount: amount || 29000,
-      nextBillingDate: nextBillingDate || new Date().toLocaleDateString('ko-KR')
+      billingDate: billingDate || new Date().toLocaleDateString('ko-KR')
     });
 
     const result = await alimtalkService.sendSubscriptionSuccess(phone, {
       name: name || '고객',
       membershipType: membershipType || 'Premium',
       amount: amount || 29000,
-      nextBillingDate: nextBillingDate || new Date().toLocaleDateString('ko-KR')
+      billingDate: billingDate || new Date().toLocaleDateString('ko-KR')
     });
 
     return NextResponse.json({
