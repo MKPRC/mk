@@ -36,7 +36,7 @@ export const MembershipCard: React.FC<MembershipCardProps> = ({ plan }) => {
         {plan.features.map((feature, index) => (
           <li key={index} className="flex items-center text-gray-700">
             <svg
-              className="w-5 h-5 text-blue-600 mr-2"
+              className="w-5 h-5 text-primary-500 mr-2"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

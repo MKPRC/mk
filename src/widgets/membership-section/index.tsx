@@ -68,7 +68,7 @@ export const MembershipSection: React.FC = () => {
           viewport={{ once: true }}
           className="text-center"
         >
-          <p className="text-blue-600 font-bold text-lg">
+          <p className="text-primary-500 font-bold text-lg">
             흐름은 단순한 서비스가 아니라, 함께 흐르는 변화를 만드는 공간입니다. 
             모든 수익의 30%는 도움이 필요한 이웃과 유기견 보호, 그리고 어린이들에게 전달됩니다. 
             함께 만드는 미래, 함께 흐르는 가치.

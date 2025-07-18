@@ -41,13 +41,13 @@ export const HeroSection: React.FC = () => {
           </div>
           <div className="space-y-2">
             <p className="text-sm text-gray-600">
-              <span className="text-blue-600 font-semibold">2.1배 빠른 연결</span> – Flow 구독자 후기
+              <span className="text-primary-500 font-semibold">2.1배 빠른 연결</span> – Flow 구독자 후기
             </p>
             <p className="text-sm text-gray-600">
-              <span className="text-blue-600 font-semibold">차량 구매 + Gold 혜택</span> – Flow+ 이용자 체감
+              <span className="text-primary-500 font-semibold">차량 구매 + Gold 혜택</span> – Flow+ 이용자 체감
             </p>
             <p className="text-sm text-gray-600">
-              <span className="text-blue-600 font-semibold">가치의 전환점 경험</span> – Flow Gold 실사용 리뷰
+              <span className="text-primary-500 font-semibold">가치의 전환점 경험</span> – Flow Gold 실사용 리뷰
             </p>
           </div>
         </motion.div>

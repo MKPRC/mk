@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAuth } from '@/shared/lib/auth';
 import { X } from 'lucide-react';
@@ -12,7 +12,10 @@ interface LoginModalProps {
 }
 
 export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
-  const { signInWithKakao } = useAuth();
+  const { signInWithKakao, signInWithPassword } = useAuth();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [isTestLoginLoading, setIsTestLoginLoading] = useState(false);
 
   const handleKakaoLogin = async () => {
     try {
@@ -21,6 +24,30 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     } catch (error) {
       console.error('카카오 로그인 오류:', error);
       alert('로그인 처리 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleTossTestLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) {
+      alert('이메일과 비밀번호를 입력해주세요.');
+      return;
+    }
+
+    try {
+      setIsTestLoginLoading(true);
+      const { error } = await signInWithPassword(email, password);
+      if (error) {
+        console.error('토스 테스트 로그인 오류:', error);
+        alert('로그인 중 오류가 발생했습니다: ' + error.message);
+        return;
+      }
+      onClose();
+    } catch (error) {
+      console.error('토스 테스트 로그인 오류:', error);
+      alert('로그인 처리 중 오류가 발생했습니다.');
+    } finally {
+      setIsTestLoginLoading(false);
     }
   };
 
@@ -72,6 +99,57 @@ export const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
               </button>
 
               <NaverLoginButton onLogin={onClose} />
+
+              {/* 토스 테스트 로그인 */}
+              <div className="border-t border-gray-200 pt-4">
+                <p className="text-xs text-gray-500 text-center mb-3">토스 테스트용</p>
+                <form onSubmit={handleTossTestLogin} className="space-y-3">
+                  <input
+                    type="email"
+                    placeholder="테스트 계정 이메일"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    required
+                  />
+                  <input
+                    type="password"
+                    placeholder="비밀번호"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    disabled={isTestLoginLoading}
+                    className={`w-full flex items-center justify-center gap-3 py-3 px-4 rounded-lg font-medium transition-colors ${
+                      isTestLoginLoading
+                        ? 'bg-gray-400 cursor-not-allowed text-white'
+                        : 'bg-primary-500 text-white hover:bg-primary-600'
+                    }`}
+                  >
+                    {isTestLoginLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        로그인 중...
+                      </>
+                    ) : (
+                      <>
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                        >
+                          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                        </svg>
+                        토스 테스트 로그인
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
             </div>
 
             <p className="text-xs text-gray-500 text-center mt-6">

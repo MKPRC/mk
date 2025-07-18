@@ -120,7 +120,7 @@ export const PaymentButton: React.FC<PaymentButtonProps> = ({ plan }) => {
         className={`w-full py-3 px-6 rounded-lg font-medium transition-colors ${
           isLoading
             ? 'bg-gray-400 cursor-not-allowed text-white'
-            : 'bg-blue-600 hover:bg-blue-700 text-white'
+            : 'bg-primary-500 hover:bg-primary-600 text-white'
         }`}
       >
         {isLoading ? '처리 중...' : '구독하기'}

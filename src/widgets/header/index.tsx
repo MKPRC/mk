@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
           <div className="flex justify-between items-center h-16">
             {/* 로고 */}
             <Link href="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">F</span>
               </div>
               <span className="text-xl font-bold text-gray-900">흐름</span>
@@ -42,11 +42,11 @@ export const Header: React.FC = () => {
 
             {/* 네비게이션 */}
             <nav className="hidden md:flex items-center space-x-8">
+              <Link href="/service" className="text-gray-600 hover:text-gray-900 transition-colors">
+                서비스 소개
+              </Link>
               <Link href="/#membership-section" className="text-gray-600 hover:text-gray-900 transition-colors">
                 멤버십
-              </Link>
-              <Link href="/#about" className="text-gray-600 hover:text-gray-900 transition-colors">
-                서비스 소개
               </Link>
               <Link href="/#contact" className="text-gray-600 hover:text-gray-900 transition-colors">
                 문의하기
@@ -63,8 +63,8 @@ export const Header: React.FC = () => {
                     onClick={() => setShowUserMenu(!showUserMenu)}
                     className="flex items-center space-x-2 text-gray-700 hover:text-gray-900 transition-colors"
                   >
-                    <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                      <span className="text-blue-600 text-sm font-medium">
+                    <div className="w-8 h-8 bg-primary-100 rounded-full flex items-center justify-center">
+                      <span className="text-primary-500 text-sm font-medium">
                         {getUserDisplayName().charAt(0).toUpperCase()}
                       </span>
                     </div>
@@ -133,7 +133,7 @@ export const Header: React.FC = () => {
               ) : (
                 <button
                   onClick={() => setShowLoginModal(true)}
-                  className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+                  className="bg-primary-500 text-white px-4 py-2 rounded-lg font-medium hover:bg-primary-600 transition-colors"
                 >
                   로그인
                 </button>
