@@ -34,7 +34,14 @@ export async function GET(request: NextRequest) {
 
     if (!billingResponse.ok) {
       const errorData = await billingResponse.json();
-      console.error('토스페이먼츠 빌링키 발급 실패:', errorData);
+      console.error('토스페이먼츠 빌링키 발급 실패:', {
+        status: billingResponse.status,
+        statusText: billingResponse.statusText,
+        errorData,
+        secretKeyPrefix: secretKey?.substring(0, 10),
+        authKey,
+        customerKey
+      });
       
       // V2 에러 코드 처리
       if (errorData.code === 'UNAUTHORIZED_KEY') {
@@ -43,7 +50,7 @@ export async function GET(request: NextRequest) {
         return NextResponse.redirect(new URL('/?error=billing_not_supported', request.url));
       }
       
-      return NextResponse.redirect(new URL('/?error=billing_issue_failed', request.url));
+      return NextResponse.redirect(new URL(`/?error=billing_issue_failed&code=${errorData.code}&message=${encodeURIComponent(errorData.message || '')}`, request.url));
     }
 
     const billingData = await billingResponse.json();
