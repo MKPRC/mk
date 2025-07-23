@@ -148,7 +148,7 @@ export const Header: React.FC = () => {
             <Link href="/#membership-section" className="block py-2 text-gray-600 hover:text-gray-900">
               멤버십
             </Link>
-            <Link href="/#about" className="block py-2 text-gray-600 hover:text-gray-900">
+            <Link href="/service" className="block py-2 text-gray-600 hover:text-gray-900">
               서비스 소개
             </Link>
             <Link href="/#contact" className="block py-2 text-gray-600 hover:text-gray-900">
